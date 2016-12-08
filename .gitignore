@@ -6,6 +6,8 @@
 
 # Ignore bundler config.
 /.bundle
+public
+swagger
 
 # Ignore all logfiles and tempfiles.
 /log/*
