@@ -4,8 +4,16 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one: 
+  model_id: "7ca4353d-5eb5-4528-9fd4-0363b9993167"
+  owner_id: "test@sanger.ac.uk"
+  model_type: "set"
+
 # column: value
 #
-two: {}
+two: 
+  model_id: "0d31266e-f2fd-49d2-8721-fd17e66438f8"
+  owner_id: "test@sanger.ac.uk"
+  model_type: "biomaterial"
+
 # column: value
