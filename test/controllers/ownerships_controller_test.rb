@@ -21,7 +21,7 @@ class OwnershipsControllerTest < ActionDispatch::IntegrationTest
       post ownerships_url, params: { ownership: @testing_data }, as: :json
     end
 
-    assert_response 201
+    assert_response :created
   end
 
   test "should show ownership" do
@@ -34,7 +34,7 @@ class OwnershipsControllerTest < ActionDispatch::IntegrationTest
       patch ownership_url(@ownership), params: { ownership: { owner_id: @testing_data[:owner_id] } }, as: :json
     end
 
-    assert_response 200
+    assert_response :ok
   end
 
   test "should update ownership" do
@@ -42,7 +42,7 @@ class OwnershipsControllerTest < ActionDispatch::IntegrationTest
       put ownership_url(@ownership), params: { ownership: @testing_data }, as: :json
     end
 
-    assert_response 200
+    assert_response :ok
   end  
 
   test "should destroy ownership" do
@@ -50,18 +50,18 @@ class OwnershipsControllerTest < ActionDispatch::IntegrationTest
       delete ownership_url(@ownership), as: :json
     end
 
-    assert_response 204
+    assert_response :no_content
   end
 
   test "should not create more than one ownerships with several create calls" do
     assert_difference('Ownership.count') do
       post ownerships_url, params: { ownership: @testing_data }, as: :json
-      assert_response 201
+      assert_response :created
     end
     assert_no_difference('Ownership.count') do
       2.times { 
         post ownerships_url, params: { ownership: @testing_data }, as: :json 
-        assert_response 201
+        assert_response :created
       }
     end 
   end
@@ -70,31 +70,29 @@ class OwnershipsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Ownership.count') do
       2.times { 
         patch ownership_url(@ownership), params: { ownership: { owner_id: @testing_data[:owner_id] } }, as: :json
-        assert_response 200
+        assert_response :ok
       }
     end
   end
 
   test "should allow me to change the owner of a model" do
     get ownership_url(@ownership), as: :json
-    assert_response :success
-    assert_raises ActiveRecord::RecordNotFound do
-      get ownership_url(@testing_data), as: :json
-    end
-    put ownership_url(@ownership), params: { ownership: @testing_data}, as: :json
-    assert_response 200
-    assert_raises ActiveRecord::RecordNotFound do
-      get ownership_url(@ownership), as: :json
-    end
+    assert_response :ok
     get ownership_url(@testing_data), as: :json
-    assert_response 200
+    assert_response :not_found
+    put ownership_url(@ownership), params: { ownership: @testing_data}, as: :json
+    assert_response :ok
+    get ownership_url(@ownership), as: :json
+    assert_response :not_found
+    get ownership_url(@testing_data), as: :json
+    assert_response :ok
   end
 
   test "should allow to update ownerships several times" do
     assert_no_difference('Ownership.count') do
       2.times { 
         put ownership_url(@ownership), params: { ownership: @ownership }, as: :json 
-        assert_response 200
+        assert_response :ok
       }
     end
   end
