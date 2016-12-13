@@ -30,7 +30,6 @@ describe 'Ownerships API' do
       response '422', 'invalid request' do
         let(:ownership) { {
           owner_id: 'test@sanger.ac.uk', 
-          model_id: 'invaliduuid',
           model_type: 'set'
         } }
         run_test!
