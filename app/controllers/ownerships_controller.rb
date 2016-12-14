@@ -1,4 +1,3 @@
-require 'pry'
 
 class OwnershipsController < ApplicationController
   before_action :set_ownership, only: [:show, :update, :destroy]
