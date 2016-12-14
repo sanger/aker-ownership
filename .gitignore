@@ -17,3 +17,6 @@ swagger
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore sqlite3 files
+db/*.sqlite3

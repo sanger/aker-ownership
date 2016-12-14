@@ -15,7 +15,7 @@
 # gem 'pg'
 #
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
@@ -57,7 +57,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: aker-ownership_test
+  adapter: sqlite3
+  database: db/aker-ownership_test.sqlite3
 
 
 # As with config/secrets.yml, you never want to store sensitive information,

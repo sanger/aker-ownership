@@ -12,12 +12,14 @@
 
 ActiveRecord::Schema.define(version: 20161208111025) do
 
-  create_table "ownerships", primary_key: "model_id", id: :string, force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "ownerships", primary_key: "model_id", id: :uuid, default: nil, force: :cascade do |t|
     t.string   "model_type", null: false
     t.string   "owner_id",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["model_id"], name: "sqlite_autoindex_ownerships_1", unique: true
   end
 
 end
