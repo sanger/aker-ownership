@@ -4,7 +4,7 @@ class OwnershipsController < ApplicationController
 
   # GET /ownerships
   def index
-    @ownerships = Ownership.all
+    @ownerships = Ownership.all.limit(1000)
 
     render json: @ownerships
   end
