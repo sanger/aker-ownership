@@ -44,4 +44,9 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.middleware.use ZipkinTracer::RackHandler, { service_name: "Ownership Service",
+                           service_port: 3000,
+                           sample_rate: 1,
+                           json_api_host: "http://localhost:9411" }
 end

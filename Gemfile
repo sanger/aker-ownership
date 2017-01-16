@@ -18,7 +18,7 @@ gem 'puma', '~> 3.0'
 gem 'rswag'
 gem 'swagger-ui_rails'
 gem 'sprockets-rails'
-
+gem 'zipkin-tracer'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -29,7 +29,7 @@ gem 'sprockets-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'pry'  
+  gem 'pry'
 end
 
 group :test do
