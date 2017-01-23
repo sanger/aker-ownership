@@ -44,7 +44,44 @@ class OwnershipsController < ApplicationController
     @ownership.destroy
   end
 
+  # POST /ownerships/batch
+  # {
+  #   "ownership": [
+  #      {
+  #         "model_id": "xxxxxxxxxxx",
+  #         "model_type": "THING",
+  #         "owner_id": "jeff@jeff.com"
+  #      },
+  #      ...
+  #   ]
+  # }
+  def create_batch
+    validated_parameters = batch_params
+    modelidhash = {}
+    # Abort if a model_id is repeated.
+    validated_parameters.each do |item|
+      modelid = item[:model_id]
+      if modelidhash.has_key?(modelid)
+        error = {
+          status: 400,
+          message: "Repeated model id: #{modelid.inspect}"
+        }
+        return render json: error, status: :bad_request
+      end
+      modelidhash[modelid] = item
+    end
+
+    @ownerships = Ownership.upsert_batch(modelidhash)
+
+    render json: @ownerships, status: :created
+  end
+
   private
+    # white list the batch ownership parameters
+    def batch_params
+      params.permit(:ownership => [ :model_id, :model_type, :owner_id ]).require(:ownership)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_ownership
       @ownership = Ownership.find(params[:model_id])

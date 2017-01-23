@@ -9,6 +9,29 @@ class OwnershipsControllerTest < ActionDispatch::IntegrationTest
       model_id: SecureRandom.uuid,
       model_type: 'set'
     }
+
+    @batch_testing_data = [
+        {
+          owner_id: 'test2@sanger.ac.uk',
+          model_id: ownerships(:one).model_id,
+          model_type: 'set',
+        },
+        {
+          owner_id: 'test3@sanger.ac.uk',
+          model_id: ownerships(:two).model_id,
+          model_type: 'biomaterial',
+        },
+        {
+          owner_id: 'test4@sanger.ac.uk',
+          model_id: SecureRandom.uuid,
+          model_type: 'set',
+        },
+        {
+          owner_id: 'test5@sanger.ac.uk',
+          model_id: SecureRandom.uuid,
+          model_type: 'set',
+        },
+    ]
   end
 
   test "should get index" do
@@ -97,5 +120,15 @@ class OwnershipsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should batch upsert ownerships" do
+    assert_difference('Ownership.count', 2) do
+      post ownerships_batch_url, params: { ownership: @batch_testing_data }, as: :json
+      ownerships(:one).reload
+      ownerships(:two).reload
+      assert_equal 'test2@sanger.ac.uk', ownerships(:one).owner_id
+      assert_equal 'test3@sanger.ac.uk', ownerships(:two).owner_id
+      assert_response :created
+    end
+  end
 
 end
