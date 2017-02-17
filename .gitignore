@@ -20,3 +20,6 @@ swagger
 
 # Ignore sqlite3 files
 db/*.sqlite3
+
+# Ignore coverage
+coverage
